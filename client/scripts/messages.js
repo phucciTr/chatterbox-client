@@ -16,18 +16,18 @@
 
 
 var data = {
-  "messages": [
+  'messages': [
     {
-      username: "Phucci",
-      text: "Hello World!",
-      roomname: "JP"
+      username: 'Phucci',
+      text: 'Hello World!',
+      roomname: 'JP'
     }, {
-      "username": "Javier",
-      "text": "Hello World again!",
-      "roomname": "JP"
+      'username': 'Javier',
+      'text': 'Hello World again!',
+      'roomname': 'JP'
     }, {
-      "username": "HackReactor",
-      "text": "You're an engineer!",
-      "roomname": "JP"
+      'username': 'HackReactor',
+      'text': 'Youre an engineer!',
+      'roomname': 'JP'
     }]
 };
