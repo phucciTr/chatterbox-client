@@ -20,29 +20,57 @@ var App = {
   fetch: function(callback = ()=>{}) {
     Parse.readAll((data) => {
       // examine the response from the server request:
-      console.log(data);
-      console.log('roomname = ', data.results[20].roomname);
+      // console.log(data);
 
       let results = data.results;
 
-      let nonDuplicateResults = _unique(results);
-
-      // pass the results into _unique
-      // _unique returns us an [] of non-duplicate
+      // create an non duplicate object to use as a set
+      let addedRooms = {};
 
       // iterate over results {}
       for (let key in results) {
         let currentMessageObject = results[key];
         let roomName = currentMessageObject.roomname;
 
+        if (roomName !== null && roomName !== undefined && roomName !== '') {
 
-        // iterate thru non-duplicate array, add in all elements
-        if (roomName !== 'null' || roomName !== 'undefined') {
-          RoomsView.$select.append(`<option>${roomName}</option>`);
+          // if roomName is NOT already in the addedRooms object
+          if (addedRooms[roomName] === undefined) {
+
+            // add it to the addedRooms object
+            addedRooms[roomName] = roomName;
+            RoomsView.$select.append(`<option>${roomName}</option>`);
+            // $('#chats').append(currentMessageObject.username);
+          }
         }
       }
+
+      // when the user choose a room from the drop down menu
+      $('#rooms select').change(function() {
+        // debugger;
+        for (let key in results) {
+          let currentMessageObject = results[key];
+
+          // so try that
+          if (currentMessageObject.roomname === $('select option:roomname')) {
+            // MessagesView.renderMessage(currentMessageObject.text);
+            $('#chats').append(currentMessageObject.text);
+          }
+        }
+      });
+      // iterate server msgs
+      //if data results i roomname matches selected from menu
+      // clear chats div
+      // append data results i text to chats
+      console.log(data.results);
+
+
+
+
+
       callback();
     });
+
   },
 
   startSpinner: function() {
@@ -55,3 +83,5 @@ var App = {
     FormView.setStatus(false);
   }
 };
+
+

@@ -10,4 +10,3 @@ var MessagesView = {
     $('#chats').append(html);
   }
 };
-

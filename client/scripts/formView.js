@@ -17,8 +17,6 @@ var FormView = {
     };
 
 
-
-
     Parse.create(message);
     // MessagesView.renderMessage(message);
 
