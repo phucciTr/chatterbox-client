@@ -31,47 +31,48 @@ var App = {
       for (let key in results) {
         let currentMessageObject = results[key];
         let roomName = currentMessageObject.roomname;
+        let userName = currentMessageObject.username;
+        let message = currentMessageObject.text;
 
         if (roomName !== null && roomName !== undefined && roomName !== '') {
 
           // if roomName is NOT already in the addedRooms object
           if (addedRooms[roomName] === undefined) {
 
+            addedRooms[roomName] = {};
+
             // add it to the addedRooms object
-            addedRooms[roomName] = roomName;
+            let messageObj = {username: userName, message: message};
+            addedRooms[roomName][userName] = messageObj;
+            console.log('addedrooms[roomName] = ', addedRooms[roomName]);
+
             RoomsView.$select.append(`<option>${roomName}</option>`);
-            // $('#chats').append(currentMessageObject.username);
+
+          } else {
+            let messageObj = {username: userName, message: message};
+            addedRooms[roomName][userName] = messageObj;
           }
         }
       }
+      console.log('addedRooms = ', addedRooms);
 
-      // when the user choose a room from the drop down menu
-      $('#rooms select').change(function() {
-        // debugger;
-        for (let key in results) {
-          let currentMessageObject = results[key];
+      RoomsView.$select.change(function() {
+        let selectedRoomName = this.value;
 
-          // so try that
-          if (currentMessageObject.roomname === $('select option:roomname')) {
-            // MessagesView.renderMessage(currentMessageObject.text);
-            $('#chats').append(currentMessageObject.text);
-          }
+        let selectedRoom = addedRooms[selectedRoomName];
+        console.log('addedrooms[roomName] = ', selectedRoom);
+
+        MessagesView.$chats.html('');
+        for (var i in selectedRoom) {
+          MessagesView.renderMessage(selectedRoom[i]);
         }
       });
-      // iterate server msgs
-      //if data results i roomname matches selected from menu
-      // clear chats div
-      // append data results i text to chats
-      console.log(data.results);
-
-
-
-
-
       callback();
     });
 
   },
+
+
 
   startSpinner: function() {
     App.$spinner.show();
@@ -83,5 +84,3 @@ var App = {
     FormView.setStatus(false);
   }
 };
-
-

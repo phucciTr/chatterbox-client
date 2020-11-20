@@ -1,15 +1,25 @@
 var RoomsView = {
 
-  $button: $('#rooms button'),
+  $roomButton: $('#roomButton'),
   $select: $('#rooms select'),
+  $refresh: $('#refreshButton'),
 
   initialize: function() {
-    this.$button.click(function() {
+    this.$roomButton.click(function() {
       let roomname = window.prompt('Enter roomname');
       Rooms.add(roomname);
     });
 
     this.$select.change();
+
+    this.$refresh.click(function() {
+      $.ajax({
+        url: Parse.server,
+        type: 'GET',
+        data: { order: '-createdAt' },
+        contentType: 'application/json',
+      });
+    });
   },
 
   renderRoom: function(roomname) {
