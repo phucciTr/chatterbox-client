@@ -3,9 +3,7 @@ var Parse = {
   server: `http://parse.${window.CAMPUS}.hackreactor.com/chatterbox/classes/messages`,
 
   create: function(message, successCB, errorCB = null) {
-    // todo: save a message to the server
     $.ajax({
-      // This is the url you should use to communicate with the parse API server.
       url: this.server,
       type: 'POST',
       data: JSON.stringify(message),
@@ -31,5 +29,4 @@ var Parse = {
       }
     });
   }
-
 };

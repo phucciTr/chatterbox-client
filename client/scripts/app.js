@@ -9,13 +9,14 @@ var App = {
 
     FormView.initialize();
     RoomsView.initialize();
-    MessagesView.initialize();
 
     window.addedRooms = {};
     window.selectedRoom;
 
     App.startSpinner();
     App.fetch(App.stopSpinner);
+
+    MessagesView.initialize();
   },
 
   fetch: function(callback = ()=>{}) {
@@ -28,7 +29,6 @@ var App = {
 
       callback();
     });
-
   },
 
   reloadPage: function() {

@@ -44,7 +44,6 @@ var RoomsView = {
         } else { window.addedRooms[roomName].push(messageObj); }
       }
     }
-    console.log('addedRooms = ', window.addedRooms);
   },
 
   renderSelectedRoom: function() {
@@ -58,6 +57,7 @@ var RoomsView = {
       window.selectedRoom = selectedRoomName;
 
       MessagesView.renderMessages(selectedRoom);
+      Friends.renderFriends();
     });
   },
 
@@ -73,7 +73,5 @@ var RoomsView = {
     window.selectedRoom = selectedRoomName;
 
     MessagesView.renderMessages(selectedRoom);
-
-
   },
 };

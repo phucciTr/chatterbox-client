@@ -84,18 +84,18 @@ describe('chatterbox', function() {
 
   describe('events', function() {
     it('should add a friend upon clicking their username', function() {
-      sinon.spy(Friends, 'toggleStatus');
+      sinon.spy(Friends, 'renderFriend');
 
       App.initialize();
-      MessagesView.renderMessage({
+      MessagesView.renderMessages({
         username: 'Mel Brooks',
         text: 'I didn\'t get a harumph outa that guy.!',
         roomname: 'lobby'
       });
       $('#chats').find('.username').trigger('click');
-      expect(Friends.toggleStatus.called).to.be.true;
+      expect(Friends.renderFriend.called).to.be.true;
 
-      Friends.toggleStatus.restore();
+      Friends.renderFriend.restore();
     });
 
     it('should add a room when clicking add', function() {
