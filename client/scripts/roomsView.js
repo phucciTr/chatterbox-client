@@ -74,4 +74,13 @@ var RoomsView = {
 
     MessagesView.renderMessages(selectedRoom);
   },
+
+  renderFirstRoom: function(roomName) {
+    MessagesView.$chats.html('');
+
+    let selectedRoom = window.addedRooms[roomName];
+    window.selectedRoom = roomName;
+
+    MessagesView.renderMessages(selectedRoom);
+  },
 };

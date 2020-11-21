@@ -27,6 +27,9 @@ var App = {
       RoomsView.appendRooms(results);
       RoomsView.renderSelectedRoom(window.addedRooms);
 
+      let firstRoom = Object.keys(window.addedRooms)[0];
+      RoomsView.renderFirstRoom(firstRoom);
+
       callback();
     });
   },
