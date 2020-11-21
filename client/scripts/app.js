@@ -11,68 +11,40 @@ var App = {
     RoomsView.initialize();
     MessagesView.initialize();
 
-    // Fetch initial batch of messages
+    window.addedRooms = {};
+    window.selectedRoom;
+
     App.startSpinner();
     App.fetch(App.stopSpinner);
-
   },
 
   fetch: function(callback = ()=>{}) {
     Parse.readAll((data) => {
-      // examine the response from the server request:
-      // console.log(data);
 
       let results = data.results;
 
-      // create an non duplicate object to use as a set
-      let addedRooms = {};
+      RoomsView.appendRooms(results);
+      RoomsView.renderSelectedRoom(window.addedRooms);
 
-      // iterate over results {}
-      for (let key in results) {
-        let currentMessageObject = results[key];
-        let roomName = currentMessageObject.roomname;
-        let userName = currentMessageObject.username;
-        let message = currentMessageObject.text;
-
-        if (roomName !== null && roomName !== undefined && roomName !== '') {
-
-          // if roomName is NOT already in the addedRooms object
-          if (addedRooms[roomName] === undefined) {
-
-            addedRooms[roomName] = {};
-
-            // add it to the addedRooms object
-            let messageObj = {username: userName, message: message};
-            addedRooms[roomName][userName] = messageObj;
-            console.log('addedrooms[roomName] = ', addedRooms[roomName]);
-
-            RoomsView.$select.append(`<option>${roomName}</option>`);
-
-          } else {
-            let messageObj = {username: userName, message: message};
-            addedRooms[roomName][userName] = messageObj;
-          }
-        }
-      }
-      console.log('addedRooms = ', addedRooms);
-
-      RoomsView.$select.change(function() {
-        let selectedRoomName = this.value;
-
-        let selectedRoom = addedRooms[selectedRoomName];
-        console.log('addedrooms[roomName] = ', selectedRoom);
-
-        MessagesView.$chats.html('');
-        for (var i in selectedRoom) {
-          MessagesView.renderMessage(selectedRoom[i]);
-        }
-      });
       callback();
-    });
+  });
 
   },
 
+  reloadPage: function() {
+    RoomsView.$select.html('');
+    MessagesView.$chats.html('');
+    window.addedRooms = {};
 
+    Parse.readAll((data) => {
+      let results = data.results;
+      App.startSpinner();
+      RoomsView.appendRooms(results);
+      RoomsView.renderSelectedRoom(window.addedRooms);
+      RoomsView.reRenderSelectedRoom();
+      App.stopSpinner();
+    });
+  },
 
   startSpinner: function() {
     App.$spinner.show();
