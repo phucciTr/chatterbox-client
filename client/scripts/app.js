@@ -46,6 +46,7 @@ var App = {
       RoomsView.renderSelectedRoom(window.addedRooms);
       RoomsView.reRenderSelectedRoom();
       App.stopSpinner();
+      Friends.renderFriends();
     });
   },
 

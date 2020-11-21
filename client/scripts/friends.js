@@ -11,13 +11,11 @@ var Friends = {
   },
 
   friendsList: [],
-
   clickedName: '',
 
   addFriend: function(userName) {
     if (this.isNotFriend(userName)) {
       this.friendsList.push(userName);
-      console.log(this.friendsList);
     }
   },
 
@@ -34,10 +32,6 @@ var Friends = {
 
   isFriend: function(userName) {
     return this.friendsList.indexOf(userName) !== -1;
-  },
-
-  indexOfFriend: function(clickedName) {
-    return friendsList.indexOf(clickedName);
   },
 
   renderFriends: function() {
