@@ -27,7 +27,7 @@ var App = {
       RoomsView.renderSelectedRoom(window.addedRooms);
 
       callback();
-  });
+    });
 
   },
 

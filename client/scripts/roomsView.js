@@ -57,10 +57,7 @@ var RoomsView = {
       let selectedRoom = window.addedRooms[selectedRoomName];
       window.selectedRoom = selectedRoomName;
 
-      for (let i = 0; i < selectedRoom.length; i++) {
-        let messageObj = selectedRoom[i];
-        MessagesView.renderMessage(messageObj);
-      }
+      MessagesView.renderMessages(selectedRoom);
     });
   },
 
@@ -75,9 +72,8 @@ var RoomsView = {
     let selectedRoom = window.addedRooms[selectedRoomName];
     window.selectedRoom = selectedRoomName;
 
-    for (let i = 0; i < selectedRoom.length; i++) {
-      let messageObj = selectedRoom[i];
-      MessagesView.renderMessage(messageObj);
-    }
+    MessagesView.renderMessages(selectedRoom);
+
+
   },
 };

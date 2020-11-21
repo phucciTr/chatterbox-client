@@ -71,7 +71,7 @@ describe('chatterbox', function() {
         text: 'Never underestimate the power of the Schwartz!',
         roomname: 'lobby'
       };
-      MessagesView.renderMessage(message);
+      Messages.renderMessage(message);
       expect($('#chats').children().length).to.equal(1);
     });
 
@@ -105,6 +105,7 @@ describe('chatterbox', function() {
 
       App.initialize();
       $('#rooms').find('button').trigger('click');
+      Rooms.add(window.prompt);
       expect(Rooms.add.called).to.be.true;
 
       window.prompt = prompt;

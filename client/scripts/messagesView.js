@@ -5,8 +5,10 @@ var MessagesView = {
   initialize: function() {
   },
 
-  renderMessage: function(message) {
-    var html = MessageView.render(message);
-    $('#chats').append(html);
+  renderMessages: function(selectedRoom) {
+    for (let i = 0; i < selectedRoom.length; i++) {
+      let messageObj = selectedRoom[i];
+      Messages.renderMessage(messageObj);
+    }
   }
 };
