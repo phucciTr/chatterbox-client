@@ -5,8 +5,8 @@ var Rooms = {
     Rooms.currentRoom;
   },
 
-  renderRoom: function(roomname) {
-    $('#rooms select').append(`<option value='${roomname}'>${roomname}</option>`);
+  renderRoom: function(roomName) {
+    $('#rooms select').append(`<option value='${roomName}'>${roomName}</option>`);
   },
 
   createNewRoom: (roomName) => {
@@ -24,6 +24,17 @@ var Rooms = {
 
   isFiltered: (roomName) => {
     return roomName !== null && roomName !== undefined && (roomName.indexOf('script') === -1) && roomName !== '';
+  },
+
+  getSelectedRoom: (selectedRoomName) => {
+    let selectedRoom = Rooms.addedRooms[selectedRoomName];
+    Rooms.currentRoom = selectedRoomName;
+    return selectedRoom;
+  },
+
+  renderRoomMessages: (selectedRoom) => {
+    MessagesView.renderMessages(selectedRoom);
+    Friends.renderFriends();
   }
 };
 
