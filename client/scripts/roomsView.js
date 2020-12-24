@@ -6,21 +6,19 @@ var RoomsView = {
 
   initialize: function() {
 
+    Rooms.initialize();
+
     this.$roomButton.click(function() {
-      let roomname = window.prompt('Enter roomname');
-      Rooms.add(roomname);
+      let roomName = window.prompt('Enter roomname');
+
+      if (!Rooms.isPresent(roomName)) { Rooms.createNewRoom(roomName); }
     });
 
     this.$refresh.click(function() {
-      App.reloadPage();
+      MessagesView.$chats.html('');
     });
 
     this.$select.change();
-  },
-
-  renderRoom: function(roomname) {
-    var html = Rooms.render(roomname);
-    this.$select.append(html);
   },
 
   appendRooms: function(results) {
@@ -31,17 +29,15 @@ var RoomsView = {
       let userName = currentMessageObject.username;
       let message = currentMessageObject.text;
 
-      if (this.isFiltered(roomName)) {
+      if (Rooms.isFiltered(roomName)) {
 
         let messageObj = {username: userName, message: message};
 
-        if (window.addedRooms[roomName] === undefined) {
+        if (!Rooms.isPresent(roomName)) {
+          Rooms.createNewRoom(roomName);
+          Rooms.addMessage(roomName, messageObj);
 
-          window.addedRooms[roomName] = [];
-          window.addedRooms[roomName].push(messageObj);
-          Rooms.add(roomName);
-
-        } else { window.addedRooms[roomName].push(messageObj); }
+        } else { Rooms.addMessage(roomName, messageObj); }
       }
     }
   },
@@ -53,34 +49,32 @@ var RoomsView = {
       MessagesView.$chats.html('');
 
       let selectedRoomName = this.value;
-      let selectedRoom = window.addedRooms[selectedRoomName];
-      window.selectedRoom = selectedRoomName;
+      let selectedRoom = Rooms.addedRooms[selectedRoomName];
+      Rooms.currentRoom = selectedRoomName;
 
       MessagesView.renderMessages(selectedRoom);
       Friends.renderFriends();
     });
   },
 
-  isFiltered: function(roomName) {
-    return roomName !== null && roomName !== undefined && (roomName.indexOf('script') === -1) && roomName !== '';
-  },
-
   reRenderSelectedRoom: function() {
     MessagesView.$chats.html('');
 
-    let selectedRoomName = window.selectedRoom;
-    let selectedRoom = window.addedRooms[selectedRoomName];
-    window.selectedRoom = selectedRoomName;
+    let selectedRoomName = Rooms.currentRoom;
+    let selectedRoom = Rooms.addedRooms[selectedRoomName];
+    Rooms.currentRoom = selectedRoomName;
 
     MessagesView.renderMessages(selectedRoom);
+    Friends.renderFriends();
   },
 
-  renderFirstRoom: function(roomName) {
+  renderRoom: function(roomName) {
     MessagesView.$chats.html('');
 
-    let selectedRoom = window.addedRooms[roomName];
-    window.selectedRoom = roomName;
+    let selectedRoom = Rooms.addedRooms[roomName];
+    Rooms.currentRoom = roomName;
 
     MessagesView.renderMessages(selectedRoom);
+    Friends.renderFriends();
   },
 };

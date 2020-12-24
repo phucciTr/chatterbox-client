@@ -15,9 +15,8 @@ var FormView = {
       roomname: $('select').val()
     };
 
-    Parse.create(message);
+    Parse.create(message, App.reloadPage());
     $('#message').val('');
-    App.reloadPage();
   },
 
   setStatus: function(active) {

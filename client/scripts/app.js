@@ -6,12 +6,11 @@ var App = {
 
   initialize: function() {
     App.username = window.location.search.substr(10);
+    let regex = /%20/gi;
+    App.username = App.username.replace(regex, ' ');
 
     FormView.initialize();
     RoomsView.initialize();
-
-    window.addedRooms = {};
-    window.selectedRoom;
 
     App.startSpinner();
     App.fetch(App.stopSpinner);
@@ -25,10 +24,10 @@ var App = {
       let results = data.results;
 
       RoomsView.appendRooms(results);
-      RoomsView.renderSelectedRoom(window.addedRooms);
+      RoomsView.renderSelectedRoom();
 
-      let firstRoom = Object.keys(window.addedRooms)[0];
-      RoomsView.renderFirstRoom(firstRoom);
+      let firstRoom = Object.keys(Rooms.addedRooms)[0];
+      RoomsView.renderRoom(firstRoom);
 
       callback();
     });
@@ -37,16 +36,15 @@ var App = {
   reloadPage: function() {
     RoomsView.$select.html('');
     MessagesView.$chats.html('');
-    window.addedRooms = {};
+    Rooms.addedRooms = {};
 
     Parse.readAll((data) => {
       let results = data.results;
       App.startSpinner();
       RoomsView.appendRooms(results);
-      RoomsView.renderSelectedRoom(window.addedRooms);
+      RoomsView.renderSelectedRoom();
       RoomsView.reRenderSelectedRoom();
       App.stopSpinner();
-      Friends.renderFriends();
     });
   },
 

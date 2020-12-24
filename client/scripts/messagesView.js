@@ -7,8 +7,7 @@ var MessagesView = {
   },
 
   renderMessages: function(selectedRoom) {
-    for (let i = 0; i < selectedRoom.length; i++) {
-      let messageObj = selectedRoom[i];
+    for (let messageObj of selectedRoom) {
       Messages.renderMessage(messageObj);
     }
   }
