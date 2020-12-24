@@ -16,6 +16,7 @@ var RoomsView = {
 
     this.$refresh.click(function() {
       MessagesView.$chats.html('');
+      App.reloadPage();
     });
 
     this.$select.change();
