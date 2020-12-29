@@ -58,11 +58,15 @@ var RoomsView = {
     Rooms.renderRoomMessages(selectedRoom);
   },
 
-  renderLocalMessage: (roomName, messageObj) => {
+  renderLocalMessage: (message) => {
     App.startSpinner();
     MessagesView.$chats.html('');
-    Rooms.addLocalMessage(roomName, messageObj);
-    let selectedRoom = Rooms.getSelectedRoom(roomName);
+
+    let {roomname, username, text} = message;
+    let messageObj = {username: username, message: text};
+    Rooms.addLocalMessage(roomname, messageObj);
+
+    let selectedRoom = Rooms.getSelectedRoom(roomname);
     Rooms.renderRoomMessages(selectedRoom);
     App.stopSpinner();
   }
