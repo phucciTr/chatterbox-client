@@ -18,6 +18,10 @@ var Rooms = {
     Rooms.addedRooms[roomName].push(message);
   },
 
+  addLocalMessage: (roomName, message) => {
+    Rooms.addedRooms[roomName].unshift(message);
+  },
+
   isPresent: (roomName) => {
     return Rooms.addedRooms[roomName] !== undefined;
   },

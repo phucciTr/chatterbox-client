@@ -57,4 +57,13 @@ var RoomsView = {
     let selectedRoom = Rooms.getSelectedRoom(roomName);
     Rooms.renderRoomMessages(selectedRoom);
   },
+
+  renderLocalMessage: (roomName, messageObj) => {
+    App.startSpinner();
+    MessagesView.$chats.html('');
+    Rooms.addLocalMessage(roomName, messageObj);
+    let selectedRoom = Rooms.getSelectedRoom(roomName);
+    Rooms.renderRoomMessages(selectedRoom);
+    App.stopSpinner();
+  }
 };

@@ -15,7 +15,10 @@ var FormView = {
       roomname: $('select').val()
     };
 
-    Parse.create(message, App.reloadPage());
+    let {roomname, username, text} = message;
+    let messageObj = {username: username, message: text};
+
+    Parse.create(message, RoomsView.renderLocalMessage(roomname, messageObj));
     $('#message').val('');
   },
 
